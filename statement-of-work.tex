@@ -177,7 +177,33 @@ Tyler Marklyn}
 
 \section{Background}
 
-% TODO
+Sandia National Laboratories is a federally funded research and development
+center owned and managed by the Sandia Corporation.  The laboratory's primary
+focus is the maintenance, management, and development of the United States'
+nuclear arsenal.  Sandia also performs research in the fields of supercomputing
+and scientific computing.  The Trilinos Project, developed and maintained by
+Sandia, is a collection of open source libraries intended for use in large-scale
+scientific applications.
+
+One of the packages in Trilinos is Kokkos, which is designed to aid portability
+and performance in software written for manycore architectures.  Well-designed
+and well-implemented parallelism can yield significant speedup in certain
+processing-heavy applications, including many in the scientific computing
+domain.  However, optimizing an application to take advantage of many processors
+is highly dependent on the architecture on which the application is to run.  In
+addition, highly parallel code may suffer from race conditions between threads,
+causing either incorrect results or slower runtimes resulting from the steps
+necessary to ensure correctness.
+
+Kokkos attempts to mitigate these issues by providing allowing programmers to
+write their code once, and compile for optimization on a variety of
+manycore architectures.  Kokkos also allows users to write thread-scalable
+software by providing an API for using fast, non-locking builtins.
+
+However, the Kokkos package is still new and relatively untested.  No
+large-scale projects have yet been written using Kokkos.  Some small kernels
+have been rewritten using Kokkos, but there are still many kernels in Trilinos
+that would benefit from increased thread-scalable parallelization.
 
 \section{Goal}
 
