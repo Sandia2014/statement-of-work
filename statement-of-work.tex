@@ -226,8 +226,29 @@ and
 
 \section{Tasks}
 
-% TODO
+Our first task for this semester is to acquire a computer with suitible computational 
+capabilities. In practice, this translates to either an NVIDIA K20X or an NVIDIA Titan
+tesla card. This will allow us to test the thread scalability of our programs and insure
+that they meet Sandia's needs. 
 
+After this, we will try to familiarize ourselves with massively multithreaded 
+programming by working through a series of example problems in a veriety
+of environments. So far, we have identified numerical integration and histogram
+calculations as likely candidates for practice problems. We will try to implement
+these problems in Intel's tbb, CUDA, and OpenMP. 
+
+Next, we will shift our focus to our first kernel. While we have a significant 
+Mathematics background none of us have any experience with tensor contraction.
+We will need to explore the main algorithms used for tensor contraction and
+determine if there are existing procedures for parallizing the process. The original
+Kokkos source code should help us with this. 
+
+Once we feel we have enough of a background with the technologies, we will begin 
+working on improving the tensor contraction library. It's hard to say how difficult
+this will be at this point, but we hope that we will be able to present our progress
+at the end of semester site visit at Sandia. 
+
+After the tensor contraction library ...... TODO
 %%% Appendices.
 
 %%% For your Statement of Work, you probably won't have any
