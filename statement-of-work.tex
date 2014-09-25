@@ -233,20 +233,32 @@ scalability of our programs and insure that they meet Sandia's needs.
 
 After this, we will try to familiarize ourselves with massively multithreaded
 programming by working through a series of example problems in a veriety of
-environments. So far, we have identified numerical integration and histogram
-calculations as likely candidates for practice problems. We will try to
-implement these problems in Intel's tbb, CUDA, and OpenMP. 
+environments. So far, we have identified numerical integration, matrix
+multiplication, and histogram calculations as likely candidates for practice
+problems. We will try to implement these problems in Intel's Threaded Building
+Blocks, CUDA, and OpenMP. 
 
-Next, we will shift our focus to our first kernel. While we have a significant
-Mathematics background none of us have any experience with tensor contraction.
-We will need to explore the main algorithms used for tensor contraction and
-determine if there are existing procedures for parallizing the process. The
-original Kokkos source code should help us with this. 
+After familiarizing ourselves with TBB, CUDA and OpenMP, we will have a
+background to understand the ideal way to write code using Kokkos. At this
+point, we will begin to write solutions to our practice problems using Kokkos.
+We can then compare the speedup gains on Kokkos compared to the other
+libraries, and also the ease of writing thread scalable code using Kokkos
+comapred ot the other libraries. This will be good practice because ideally, we
+will also test a few of the kernels we write so that we can see differences is
+ease of coding and speedup in them as well.
 
-Once we feel we have enough of a background with the technologies, we will
-begin working on improving the tensor contraction library. It's hard to say how
-difficult this will be at this point, but we hope that we will be able to
-present our progress at the end of semester site visit at Sandia. 
+At this point, we will shift our focus to our first kernel.
+While we have a significant Mathematics background none of us have any
+experience with tensor contraction.  We will need to explore the main
+algorithms used for tensor contraction and determine if there are existing
+procedures for parallelizing the process. The original Kokkos source code,
+along with other materials should help us with this. 
+
+Once we are familiar with Kokkos, and we feel we have enough of a background
+with the technologies, we will begin working on improving the tensor
+contraction library. It's hard to say how difficult this will be at this point,
+but we hope that we will be able to present our progress at the end of semester
+site visit at Sandia. 
 
 After the tensor contraction library ...... TODO
 %%% Appendices.
