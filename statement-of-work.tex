@@ -173,7 +173,11 @@ Tyler Marklyn}
 
 \section{Problem Statement}
 
-Sandia National Laboratories currently has many libraries and legacy code that do not utilize new multicore architectures. Using their Kokkos library, which was created to make it possible and easy to port code to new architectures (specifically multicore architectures), we will make their tensor contractions library and, as time permits, other libraries thread scalable.
+Sandia National Laboratories currently has many libraries and legacy code that
+do not utilize new multicore architectures. Using their Kokkos library, which
+was created to make it possible and easy to port code to new architectures
+(specifically multicore architectures), we will make their tensor contractions
+library and, as time permits, other libraries thread scalable.
 
 % TODO
 
@@ -220,15 +224,36 @@ and
 
 \section{Objectives}
 
-As stated, the primary goal of this clinic is to transform Sandia's tensor manipulation and $X$ library to be thread scalable using Kokkos. This goal can be broken down into a couple different objectives. First, our team needs to get familiar with Sandia's Kokkos library. Learning the syntax, benefits, and disadvantages of Kokkos will allow us to optimize the libraries as much as possible and why it is our first objective. Our second major objective will apply the knowledge that is learned from completing the first objective: rewritting and refactoring Sandia's tensor contraction to be thread scalable using Kokkos. The third objective, which is essentially the same as the second, is to make the $x$ library thread scalable also. All of these objectives are big and very time consuming, which is why they will be broken down more in the Tasks section.
-
-% TODO
+As stated, the primary goal of this clinic is to transform Sandia's tensor
+manipulation and $X$ library to be thread scalable using Kokkos. This goal can
+be broken down into a couple different objectives. First, our team needs to get
+familiar with Sandia's Kokkos library. Learning the syntax, benefits, and
+disadvantages of Kokkos will allow us to optimize the libraries as much as
+possible and why it is our first objective. Our second major objective will
+apply the knowledge that is learned from completing the first objective:
+rewritting and refactoring Sandia's tensor contraction to be thread scalable
+using Kokkos. The third objective, which is essentially the same as the second,
+is to make the $x$ library thread scalable also. All of these objectives are
+big and very time consuming, which is why they will be broken down more in the
+Tasks section.
 
 \subsection{Optional Objectives}
 
-The optional objectives presented in this section are to be done if time permits. Firstly, if the team has finished, or has made significant progess towards making Sandia's tensor manipulation library thread scalable, then a seminar on how to use Kokkos will be given to a group of Sandia's employees on the site visit. After making the tensor manipulation and $x$ libraries thead-scalable, there are a couple different objectives that can be pursued, depending on the priority given by the liaisons.The first possible objective is to continue making more of Sandia's libraries thread-scalable. This benefits Sandia by making more code run faster. While another possibility is to code versions of the tensor manipulation and $x$ libraries in CUDA, or another framework such as OpenCL, in order to compare their performance with Kokkos' performance. The performance tests can show the strengths and weaknesses of Kokkos and give information that is useful to the developers of Kokkos. The performance tests and examples of Kokkos' simplicity can be useful examples for helping Sandia try to integrate Kokkos into the C-standard.
-
-% TODO
+The optional objectives presented in this section are to be done if time
+permits. Firstly, if the team has finished, or has made significant progess
+towards making Sandia's tensor manipulation library thread scalable, then a
+seminar on how to use Kokkos will be given to a group of Sandia's employees on
+the site visit. After making the tensor manipulation and $x$ libraries
+thead-scalable, there are a couple different objectives that can be pursued,
+depending on the priority given by the liaisons.The first possible objective is
+to continue making more of Sandia's libraries thread-scalable. This benefits
+Sandia by making more code run faster. While another possibility is to code
+versions of the tensor manipulation and $x$ libraries in CUDA, or another
+framework such as OpenCL, in order to compare their performance with Kokkos'
+performance. The performance tests can show the strengths and weaknesses of
+Kokkos and give information that is useful to the developers of Kokkos. The
+performance tests and examples of Kokkos' simplicity can be useful examples for
+helping Sandia try to integrate Kokkos into the C-standard.
 
 \section{Tasks}
 
