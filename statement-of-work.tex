@@ -194,24 +194,31 @@ One of the packages in Trilinos is Kokkos, which is designed to aid portability
 and performance in software written for manycore architectures.  Well designed
 and well implemented parallelism can yield significant speedup in certain
 processing-heavy applications, including many in the scientific computing
-domain.  However, optimizing an application to take advantage of many processors
-is highly dependent on the architecture on which the application is to run.  In
-addition, highly parallel code may suffer from race conditions between threads,
-causing either incorrect results or slower runtimes resulting from the steps
-necessary to ensure correctness.
+domain.
+
+An area where existing code could be drastically improved is in the use of
+Graphical Processing Units (GPUs).  Compared to traditional CPUs, GPUs have far
+more cores specialized to handle many threads at once.  In FLOP heavy
+applications, GPUs can be considerably faster, more energy efficient, and
+cheaper to use than CPUs.
+
+However, optimizing an application to take advantage of many cores is highly
+dependent on the architecture on which the application is to run.  In addition,
+highly parallel code may suffer from race conditions between threads, causing
+either incorrect results or slower runtimes resulting from the steps necessary
+to ensure correctness.
 
 Kokkos attempts to mitigate these issues by allowing programmers to
 write their code once, and compile for optimization on a variety of
 manycore architectures.  This is possible because the library manages the
 allocation of memory for the programmer and optimizes storage for speed on
 the current architecture. Kokkos also allows users to write thread scalable
-software by providing an API for using fast, non-locking data structures. 
+software by providing an API for using fast, non-locking data structures.
 
 However, the Kokkos package is still new and relatively untested.  No
 large-scale projects have yet been written with it.  Some small kernels
 have been rewritten using Kokkos, but there are still many kernels in Trilinos
-that would benefit from increased thread scalable parallelization. We hope that
-we will be able to both improve the quality of their libraries.
+that would benefit from increased thread scalable parallelization.
 
 
 \section{Goal}
@@ -219,10 +226,11 @@ we will be able to both improve the quality of their libraries.
 The goal of this clinic is to rewrite several Trilinos kernels to be efficient
 and thread-scalable on manycore architectures, using Kokkos.  These redesigned
 and reimplemented kernels will be integrated into Trilinos' production code, as
-both a performance improvement and as a further test for Kokkos.
+both a performance improvement and as an example of a compelling use case for
+Kokkos.
 
-The kernels we plan to work on are Intrepid, a tensor manipulation library,
-and a kernel from this list: x, y, z.
+We plan to work on kernels from Intrepid, a tensor manipulation library, as well
+as kernels from one of these libraries: x, y, z.
 % (TODO fill this in later.)
 
 \section{Objectives}
@@ -256,8 +264,9 @@ in CUDA will make it easy to compare Kokkos to CUDA.
 
 Our first task for this semester is to acquire a desktop with suitable
 computational capabilities. In practice, this translates to either an NVIDIA
-K20X tesla card or an NVIDIA Titan (Jeff please confirm) . This will allow us to test the thread
-scalability of our programs and ensure that they meet Sandia's needs.
+K20X tesla card or an NVIDIA Titan (Jeff please confirm) . This will allow us to
+test the thread scalability of our programs and ensure that they meet Sandia's
+needs.
 
 After this, we will try to familiarize ourselves with massively multithreaded
 programming by working through a series of example problems in a variety of
