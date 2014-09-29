@@ -192,11 +192,21 @@ Sandia, is a collection of open source libraries intended for use in large-scale
 scientific applications.
 
 One of the packages in Trilinos is Kokkos, which is designed to aid portability
-and performance in software written for manycore architectures.  Well designed
-and well implemented parallelism can yield significant speedup in certain
-processing-heavy applications, including many in the scientific computing
-domain.  However, optimizing an application to take advantage of many processors
-is highly dependent on the architecture on which the application is to run.  In
+and performance in software written for manycore architectures.  Typically, programmers
+write code that will run on a computer's central processing unit (CPU). However,
+the computer science community is moving towards multicore hardware. Instead of
+running code on CPUs, high performance applications are being redesigned to run on
+graphics processing units (GPUs). GPUs are characterized by high thread counts, decreased
+memory per thread, and relatively small instruction sets when compared to CPUs. These 
+differences lead to many advantages when it comes to high performance computing. Since
+GPUs have a smaller instruction set, they can devote more of their transistors to arithmetic 
+computation. This means that GPUs are capable of executing significantly more floating point
+operations per second (flops). Additionally, GPUs use less power than CPUs, which makes
+them appealing for supercomputers, where power consumption is a major concern.
+
+Well implemented GPU code can yield significant speedup in certain
+processing-heavy applications.  However, the ways in which an algorithm must be optimized 
+to run on a GPU is highly dependent on hardware architecture.  In
 addition, highly parallel code may suffer from race conditions between threads,
 causing either incorrect results or slower runtimes resulting from the steps
 necessary to ensure correctness.
@@ -211,8 +221,7 @@ software by providing an API for using fast, non-locking data structures.
 However, the Kokkos package is still new and relatively untested.  No
 large-scale projects have yet been written with it.  Some small kernels
 have been rewritten using Kokkos, but there are still many kernels in Trilinos
-that would benefit from increased thread scalable parallelization. We hope that
-we will be able to both improve the quality of the 
+that would benefit from increased thread scalable parallelization. 
 
 
 \section{Goal}
@@ -220,26 +229,35 @@ we will be able to both improve the quality of the
 The goal of this clinic is to rewrite several Trilinos kernels to be efficient
 and thread-scalable on manycore architectures, using Kokkos.  These redesigned
 and reimplemented kernels will be integrated into Trilinos' production code, as
-both a performance improvement and as a further test for Kokkos.
+both a performance improvement and as a use case for Kokkos.
 
-The two kernels we plan to work on are Intrepid, a tensor manipulation library,
-and
-% (TODO fill this in later.)
-
+We plan on rewriting a tensor contraction library in Kokkos's Interpid package. The 
+Intrepid package is a library of kernels designed for use by developers who want to 
+reuse large parts of their existing code frameworks while gaining access to state of the
+art tools for compatible discretizations of partial differential equations. In addition, 
+to the tensor contraction library, we plan on updating one additional kernel. This kernel 
+will either perform graph analytics, algebraic multigrid solving, or molecular dynamics 
+simulations. 
 \section{Objectives}
 
-As stated, the primary goal of this clinic is to transform Sandia's tensor
-manipulation and $X$ library to be thread scalable using Kokkos. This goal can
-be broken down into a couple different objectives. First, our team needs to get
-familiar with Sandia's Kokkos library. Learning the syntax, benefits, and
-disadvantages of Kokkos will allow us to optimize the libraries as much as
-possible and why it is our first objective. Our second major objective will
-apply the knowledge that is learned from completing the first objective:
-rewritting and refactoring Sandia's tensor contraction to be thread scalable
-using Kokkos. The third objective, which is essentially the same as the second,
-is to make the $x$ library thread scalable also. All of these objectives are
-big and very time consuming, which is why they will be broken down more in the
-Tasks section.
+The primary goal of this clinic is to update Intrepid's tensor
+manipulation for thread scalability using Kokkos. After this, we will begin work
+on one of the secondary options listed above. This goal can
+be broken down into a couple different objectives. 
+\begin{itemize}
+\item First, our team will familiarize ourselves with Kokkos' structure and usage by 
+implementing several warm up algorithms with different memory access patterns. 
+We also plan on doing performance comparisons with serial CPU implementations
+to learn the most effective mechanisms for parallel speedup. 
+\item Our second major objective will be use what we have learned about massively parallel code to speed up Intrepid's tensor contraction kernel.  
+\item The third and final objective of this project is to speed up another kernel from intrepid. 
+This kernel will be focused on one of the following. 
+	\begin{itemize}
+		\item graph analytics
+		\item algebraic multigrid solving
+		\item molecular dynamics simulations
+	\end{itemize}
+\end{itemize}
 
 \subsection{Optional Objectives}
 
@@ -247,32 +265,49 @@ The optional objectives presented in this section are to be done if time
 permits. Firstly, if the team has finished, or has made significant progess
 towards making Sandia's tensor manipulation library thread scalable, then a
 seminar on how to use Kokkos will be given to a group of Sandia's employees on
-the site visit. After making the tensor manipulation and $x$ libraries
+the site visit. After we've finished work on the Intrepid kernels. 
 thead-scalable, there are a couple different objectives that can be pursued,
 depending on the priority given by the liaisons.The first possible objective is
-to continue making more of Sandia's libraries thread-scalable. This benefits
-Sandia by making more code run faster. While another possibility is to code
-versions of the tensor manipulation and $x$ libraries in CUDA, or another
-framework such as OpenCL, in order to compare their performance with Kokkos'
-performance. The performance tests can show the strengths and weaknesses of
-Kokkos and give information that is useful to the developers of Kokkos. The
-performance tests and examples of Kokkos' simplicity can be useful examples for
-helping Sandia try to integrate Kokkos into the C-standard.
+to continue making more of Sandia's libraries thread-scalable. This means that 
+the libraries will run faster on manycore architectures. Another possibility is to code
+versions of the Intrepid libraries in CUDA, or another
+framework such as OpenCL, in order to compare their performance with the Kokkos'
+implementations. The performance tests can show the strengths and weaknesses of
+Kokkos and give information that is useful to the developers of Kokkos. This will allow
+Sandia to fully test the ideas behind Kokkos. 
 
 \section{Tasks}
 
-Our first task for this semester is to acquire a desktop with suitable
-computational capabilities. In practice, this translates to either an NVIDIA
-K20X tesla card or an NVIDIA Titan (Jeff please confirm) . This will allow us to test the thread
-scalability of our programs and ensure that they meet Sandia's needs.
+Our first task for this semester was to acquire a desktop with suitable
+computational capabilities. We have ordered a machine with an NVIDIA K20 Tesla Card,
+Intel Phi 5110p Co-processor, and a 8-Core Ivy Bridge Processor. These advanced CPUs 
+and GPUs should allow us to test NVIDIA's GPU computing platform as well as Intel's, and
+allow us to compare the performance of our code on GPUs to the Ivy Bridge's traditional
+8-Core hardware. 
 
 After this, we will try to familiarize ourselves with massively multithreaded
 programming by working through a series of example problems in a variety of
-environments. So far, we have identified numerical integration, matrix
-multiplication, and histogram calculations as likely candidates for practice
-problems. We will try to implement these problems in Intel's Threaded Building
-Blocks, CUDA, and OpenMP.
+environments. So far, we have identified the following problems as likely candidates.
+\begin{itemize}
+	\item scalar integration
+	\item histogram calculations
+	\item calculating polynomials for a long list of x values and coefficients.
+	\item naive matrix multiplication
+	\item smart matrix multiplication
+	\item scalar product of two second order tensors 
+	\item contraction of fourth order tensor with second order tensor
+\end{itemize}
+The last of these problems should prepare us to work with the Intrepid library, since these
+two problems are indicative of the types of kernels we will be working with. 
 
+For all of these problems, we intend on creating the following solutions
+\begin{itemize}
+	\item fast serial
+	\item implementation using Intel's Threaded Building Blocks
+	\item implementation using OpenMP
+	\item implementation using Cuda
+	\item implementation using kokkos
+\end{itemize}
 After familiarizing ourselves with TBB, CUDA and OpenMP, we will have a
 background to understand the ideal way to write code using Kokkos. At this
 point, we will begin to write solutions to our practice problems using Kokkos.
@@ -283,8 +318,9 @@ will also test a few of the kernels we write so that we can see differences is
 ease of coding and speedup in them as well.
 
 At this point, we will shift our focus to our first kernel.
-While we have a significant mathematics background none of us have any
-experience with tensor contraction.  We will need to explore the main
+After we implement the practice problems mentioned above we should have a good
+idea of where to go with the tensor contraction implementation. Tensor contraction is very
+similar to smart matrix multiplication in particular.  We will need to explore the main
 algorithms used for tensor contraction and determine if there are existing
 procedures for parallelizing the process. The original Kokkos source code,
 along with online materials should help us with this.
@@ -295,7 +331,8 @@ contraction library. At this point in the project it is difficult to create an a
 for this process, but we hope that we will be able to present our progress at 
 the end of semester site visit at Sandia.
 
-After the tensor contraction library ...... TODO
+After the tensor contraction library we will continue work on one of the Intrepid kernels previously mentioned. We hope that we will be able to accomplish significant speedup in
+this secondary library after we finish work on tensor contraction. 
 %%% Appendices.
 
 %%% For your Statement of Work, you probably won't have any
