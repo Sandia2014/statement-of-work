@@ -175,8 +175,8 @@ Tyler Marklyn}
 
 Sandia National Laboratories currently has many libraries and legacy code that
 do not utilize new multicore architectures. Using their Kokkos library, which
-was created to make it possible and easy to port code to new architectures
-(specifically multicore architectures), we will make their tensor contractions
+was designed to make it possible and easy to port code to new architectures
+(specifically multicore architectures), we will make a tensor contractions
 library and, as time permits, other libraries thread scalable.
 
 % TODO
@@ -192,15 +192,22 @@ Sandia, is a collection of open source libraries intended for use in large-scale
 scientific applications.
 
 One of the packages in Trilinos is Kokkos, which is designed to aid portability
-and performance in software written for manycore architectures.  Typically, programmers
-write code that will run on a computer's central processing unit (CPU). However,
-the computer science community is moving towards multicore hardware. Instead of
-running code on CPUs, high performance applications are being redesigned to run on
-graphics processing units (GPUs). GPUs are characterized by high thread counts, decreased
-memory per thread, and relatively small instruction sets when compared to CPUs. These 
-differences lead to many advantages when it comes to high performance computing. Since
-GPUs have a smaller instruction set, they can devote more of their transistors to arithmetic 
-computation. This means that GPUs are capable of executing significantly more floating point
+and performance in software written for manycore architectures.  The vast majority of 
+scientific codes produced and used by the national labs rely on message passing 
+parallelism to leverage both inter-node and intra-node parallelism.  Until the present, 
+this approach of using MPI across a single node sacrifices some performance for the 
+ease of a monolithic programming model, and the performance penalty has not been 
+high enough to motivate the usage of threads instead of processes.  However, as the 
+exascale push hits the power wall, interest has been growing in the area of using 
+higher-performing and less power-hungry co-processors on each node, still with 
+message passing across nodes.  Unfortunately, this means that codes will have to be 
+re-written, as message-passing cannot be used to leverage the parallelism of 
+coprocessors such as Graphical Processing Units (GPUs). GPUs are characterized by 
+high thread counts, decreased memory per thread, and relatively small instruction
+ sets when compared to CPUs. These differences lead to many advantages when it 
+ comes to high performance computing. SinceGPUs have a smaller instruction set, 
+ they can devote more of their transistors to arithmetic computation. This means that
+ GPUs are capable of executing significantly more floating point
 operations per second (flops). Additionally, GPUs use less power than CPUs, which makes
 them appealing for supercomputers, where power consumption is a major concern.
 
@@ -215,7 +222,7 @@ Kokkos attempts to mitigate these issues by allowing programmers to
 write their code once, and compile for optimization on a variety of
 manycore architectures.  This is possible because the library manages the
 allocation of memory for the programmer and optimizes storage for speed on
-the current architecture. Kokkos also allows users to write thread scalable
+the target architecture. Kokkos also allows users to write thread scalable
 software by providing an API for using fast, non-locking data structures. 
 
 However, the Kokkos package is still new and relatively untested.  No
@@ -226,18 +233,18 @@ that would benefit from increased thread scalable parallelization.
 
 \section{Goal}
 
-The goal of this clinic is to rewrite several Trilinos kernels to be efficient
+The goal of this clinic is to rewrite several kernels from libraries within Trilinos to be efficient
 and thread-scalable on manycore architectures, using Kokkos.  These redesigned
 and reimplemented kernels will be integrated into Trilinos' production code, as
 both a performance improvement and as a use case for Kokkos.
 
-We plan on rewriting a tensor contraction library in Kokkos's Interpid package. The 
+We plan on reengineering a tensor contraction library within Trilinos named Intrepid. The 
 Intrepid package is a library of kernels designed for use by developers who want to 
 reuse large parts of their existing code frameworks while gaining access to state of the
-art tools for compatible discretizations of partial differential equations. In addition, 
-to the tensor contraction library, we plan on updating one additional kernel. This kernel 
-will either perform graph analytics, algebraic multigrid solving, or molecular dynamics 
-simulations. 
+art tools for compatible discretizations of partial differential equations. Once we have i
+ncorporating Kokkos into Intrepid and demonstrated measurable performance and usability 
+improvements, we plan on incorporating Kokkos into the salient kernels of another library 
+within Trilinos.  The second library will deal with either graph analytics or solving algebraic multigrid systems.
 \section{Objectives}
 
 The primary goal of this clinic is to update Intrepid's tensor
@@ -263,25 +270,22 @@ This kernel will be focused on one of the following.
 
 The optional objectives presented in this section are to be done if time
 permits. Firstly, if the team has finished, or has made significant progess
-towards making Sandia's tensor manipulation library thread scalable, then a
-seminar on how to use Kokkos will be given to a group of Sandia's employees on
-the site visit. After we've finished work on the Intrepid kernels. 
-thead-scalable, there are a couple different objectives that can be pursued,
-depending on the priority given by the liaisons.The first possible objective is
-to continue making more of Sandia's libraries thread-scalable. This means that 
-the libraries will run faster on manycore architectures. Another possibility is to code
+towards making Sandia's tensor manipulation library thread scalable, then the team will 
+present their methods and results to a group of Sandia employees during the winter site visit.
+ After we've finished work on the Intrepid kernels, there are a couple different objectives we can pursue.
+The first possible objective is
+to continue making more of Sandia's libraries thread-scalable. Another possibility is to code
 versions of the Intrepid libraries in CUDA, or another
 framework such as OpenCL, in order to compare their performance with the Kokkos'
 implementations. The performance tests can show the strengths and weaknesses of
-Kokkos and give information that is useful to the developers of Kokkos. This will allow
-Sandia to fully test the ideas behind Kokkos. 
+Kokkos and give information that is useful to the developers of Kokkos. 
 
 \section{Tasks}
 
 Our first task for this semester was to acquire a desktop with suitable
 computational capabilities. We have ordered a machine with an NVIDIA K20 Tesla Card,
-Intel Phi 5110p Co-processor, and a 8-Core Ivy Bridge Processor. These advanced CPUs 
-and GPUs should allow us to test NVIDIA's GPU computing platform as well as Intel's, and
+Intel Phi 5110p Co-processor, and a 8-Core Ivy Bridge Processor. This computer
+ should allow us to test NVIDIA's GPU computing platform as well as Intel's, and
 allow us to compare the performance of our code on GPUs to the Ivy Bridge's traditional
 8-Core hardware. 
 
@@ -313,9 +317,8 @@ background to understand the ideal way to write code using Kokkos. At this
 point, we will begin to write solutions to our practice problems using Kokkos.
 We can then compare the speedup gains on Kokkos compared to the other
 libraries, and also the ease of writing thread scalable code using Kokkos
-compared to the other libraries. This will be good practice because ideally, we
-will also test a few of the kernels we write so that we can see differences is
-ease of coding and speedup in them as well.
+compared to the other libraries. This will be good practice for applying the same 
+process to Intrepid kernels, to thoroughly evaluate performance improvement and ease of coding.
 
 At this point, we will shift our focus to our first kernel.
 After we implement the practice problems mentioned above we should have a good
