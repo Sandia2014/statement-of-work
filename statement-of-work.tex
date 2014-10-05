@@ -43,7 +43,8 @@
 % \usepackage{url}              % For formatting URLs and other web or
                                 % file references.
 
-%%% Provide additional context around errors. 
+%%% Provide additional context around errors. \includegraphics[]{statement-of-work.pdf}
+
 \setcounter{errorcontextlines}{1000}
 
 
@@ -174,9 +175,9 @@ Tyler Marklyn}
 \section{Problem Statement}
 
 Sandia National Laboratories currently has many libraries that do not utilize
-new multicore architectures. Using their Kokkos library, which was designed to
+new manycore architectures. Using their Kokkos library, which was designed to
 make it possible and easy to port code to new architectures (specifically
-multicore architectures), we will make a tensor contractions library and, as
+manycore architectures), we will make a tensor contractions library and, as
 time permits, other libraries thread scalable.
 
 \section{Background}
@@ -191,16 +192,16 @@ scientific applications.
 
 One of the packages in Trilinos is Kokkos, which is designed to aid portability
 and performance in software written for manycore architectures.  The vast
-majority of scientific software produced and used by the national labs rely on
+majority of scientific software produced and used by the national labs relies on
 message passing parallelism to leverage both inter-node and intra-node
 parallelism.  Until the present, this approach of using MPI across a single node
 sacrifices some performance for the ease of a monolithic programming model, and
 the performance penalty has not been high enough to motivate the usage of
 threads instead of processes.  However, as the exascale push hits the power
-wall, interest has been growing in the area of using higher-performing and less
+wall, interest has been growing in the area of using higher performing and less
 power-hungry co-processors on each node, still with message passing across
-nodes.  Unfortunately, this means that codes will have to be re-written, as
-message-passing cannot be used to leverage the parallelism of coprocessors such
+nodes.  Unfortunately, this means that code will have to be rewritten, as
+message passing cannot be used to leverage the parallelism of co-processors such
 as Graphical Processing Units (GPUs).
 
 GPUs are characterized by high thread counts, decreased memory per thread, and
@@ -208,7 +209,7 @@ relatively small instruction sets when compared to CPUs. These differences lead
 to many advantages when it comes to high performance computing. Since GPUs have
 a smaller instruction set, they can devote more of their transistors to
 arithmetic computation. This means that GPUs are capable of executing
-significantly more floating point operations per second (flops). Additionally,
+significantly more floating point operations per second (FLOPS). Additionally,
 GPUs use less power than CPUs, which makes them appealing for supercomputers,
 where power consumption is a major concern.
 
@@ -216,7 +217,7 @@ Well implemented GPU code can yield significant speedup in certain
 processing-heavy applications.  However, the ways in which an algorithm must be
 optimized to run on a GPU are highly dependent on hardware architecture.  In
 addition, highly parallel code may suffer from race conditions between threads,
-requiring the use of mutexes which can significantly slow down performance.
+requiring the use of atomic operations which can significantly slow down performance.
 
 Kokkos attempts to mitigate these issues by allowing programmers to write their
 code once, and compile for optimization on a variety of manycore architectures.
@@ -233,26 +234,26 @@ would benefit from increased thread scalable parallelization.
 
 \section{Goal}
 
-The goal of this clinic is to rewrite several kernels from libraries within
-Trilinos to be efficient and thread-scalable on manycore architectures, using
-Kokkos.  These redesigned and reimplemented kernels will be integrated into
+The goal of this clinic is to rewrite several kernels, using Kokkos, from libraries within
+Trilinos to be efficient and thread-scalable on manycore architectures.  
+These redesigned and reimplemented kernels will be integrated into
 Trilinos' production code, as both a performance improvement and as a use case
 for Kokkos.
 
-We plan on reengineering a tensor contraction library within Trilinos. This
-library is part of the Intrepid sub-package of Trilinos. The Intrepid package is
+We plan on reengineering a tensor contraction library within Intrepid, a sub-package of Trilinos. 
+The Intrepid package is
 a library of kernels designed for use by developers who want to reuse large
 parts of their existing code frameworks while gaining access to state of the art
 tools for compatible discretizations of partial differential equations. Once we
-have incorporating Kokkos into Intrepid and demonstrated measurable performance
+have incorporated Kokkos into Intrepid and demonstrated measurable performance
 and usability improvements, we plan on incorporating Kokkos into the salient
 kernels of another library within Trilinos.  The second library will deal with
 either graph analytics or solving algebraic multigrid systems.
 \section{Objectives}
 
 The primary goal of this clinic is to update Intrepid's tensor
-manipulation for thread scalability using Kokkos. After this, we will begin work
-on one of the secondary options listed above. This goal can
+manipulation utilities for thread scalability using Kokkos. After this, we will begin work
+on one of the secondary options. This goal can
 be broken down into a couple different objectives. 
 \begin{itemize}
     \item First, our team will familiarize ourselves with Kokkos' structure and
@@ -260,7 +261,7 @@ be broken down into a couple different objectives.
         access patterns.  We also plan on doing performance comparisons with
         serial CPU implementations to learn the most effective mechanisms for
         parallel speedup.
-    \item Our second major objective will be use what we have learned about
+    \item Our second major objective will be to use what we have learned about
         massively parallel code to speed up Intrepid's tensor contraction
         kernel.
     \item The third and final objective of this project is to speed up another
