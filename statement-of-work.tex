@@ -173,7 +173,7 @@ Tyler Marklyn}
 
 \section{Problem Statement}
 
-Sandia National Laboratories currently has many libraries and legacy code that
+Sandia National Laboratories currently has many libraries that
 do not utilize new multicore architectures. Using their Kokkos library, which
 was designed to make it possible and easy to port code to new architectures
 (specifically multicore architectures), we will make a tensor contractions
@@ -193,7 +193,7 @@ scientific applications.
 
 One of the packages in Trilinos is Kokkos, which is designed to aid portability
 and performance in software written for manycore architectures.  The vast majority of 
-scientific codes produced and used by the national labs rely on message passing 
+scientific software produced and used by the national labs rely on message passing 
 parallelism to leverage both inter-node and intra-node parallelism.  Until the present, 
 this approach of using MPI across a single node sacrifices some performance for the 
 ease of a monolithic programming model, and the performance penalty has not been 
@@ -202,10 +202,12 @@ exascale push hits the power wall, interest has been growing in the area of usin
 higher-performing and less power-hungry co-processors on each node, still with 
 message passing across nodes.  Unfortunately, this means that codes will have to be 
 re-written, as message-passing cannot be used to leverage the parallelism of 
-coprocessors such as Graphical Processing Units (GPUs). GPUs are characterized by 
+coprocessors such as Graphical Processing Units (GPUs). 
+
+GPUs are characterized by 
 high thread counts, decreased memory per thread, and relatively small instruction
  sets when compared to CPUs. These differences lead to many advantages when it 
- comes to high performance computing. SinceGPUs have a smaller instruction set, 
+ comes to high performance computing. Since GPUs have a smaller instruction set, 
  they can devote more of their transistors to arithmetic computation. This means that
  GPUs are capable of executing significantly more floating point
 operations per second (flops). Additionally, GPUs use less power than CPUs, which makes
@@ -213,10 +215,9 @@ them appealing for supercomputers, where power consumption is a major concern.
 
 Well implemented GPU code can yield significant speedup in certain
 processing-heavy applications.  However, the ways in which an algorithm must be optimized 
-to run on a GPU is highly dependent on hardware architecture.  In
+to run on a GPU are highly dependent on hardware architecture.  In
 addition, highly parallel code may suffer from race conditions between threads,
-causing either incorrect results or slower runtimes resulting from the steps
-necessary to ensure correctness.
+requiring the use of mutexes which can significantly slow down performance.
 
 Kokkos attempts to mitigate these issues by allowing programmers to
 write their code once, and compile for optimization on a variety of
@@ -238,7 +239,7 @@ and thread-scalable on manycore architectures, using Kokkos.  These redesigned
 and reimplemented kernels will be integrated into Trilinos' production code, as
 both a performance improvement and as a use case for Kokkos.
 
-We plan on reengineering a tensor contraction library within Trilinos named Intrepid. The 
+We plan on reengineering a tensor contraction library within Trilinos. This library is part of the Intrepid sub-package of Trilinos. The 
 Intrepid package is a library of kernels designed for use by developers who want to 
 reuse large parts of their existing code frameworks while gaining access to state of the
 art tools for compatible discretizations of partial differential equations. Once we have incorporating 
@@ -269,7 +270,7 @@ This kernel will be focused on one of the following.
 \subsection{Optional Objectives}
 
 The optional objectives presented in this section are to be done if time
-permits. Firstly, if the team has finished, or has made significant progess
+permits. First, if the team has finished, or has made significant progess
 towards making Sandia's tensor manipulation library thread scalable, then the team will 
 present their methods and results to a group of Sandia employees during the winter site visit.
  After we've finished work on the Intrepid kernels, there are a couple different objectives we can pursue.
