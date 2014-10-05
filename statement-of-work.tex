@@ -177,7 +177,7 @@ Tyler Marklyn}
 Sandia National Laboratories currently has many libraries that do not utilize
 new manycore architectures. Using their Kokkos library, which was designed to
 make it possible and easy to port code to new architectures (specifically
-manycore architectures), we will make a tensor contractions library and, as
+manycore architectures), we will make a tensor manipulation library and, as
 time permits, other libraries thread scalable.
 
 \section{Background}
@@ -240,7 +240,7 @@ These redesigned and reimplemented kernels will be integrated into
 Trilinos' production code, as both a performance improvement and as a use case
 for Kokkos.
 
-We plan on reengineering a tensor contraction library within Intrepid, a sub-package of Trilinos. 
+We plan on reengineering a tensor manipulation library within Intrepid, a sub-package of Trilinos. 
 The Intrepid package is
 a library of kernels designed for use by developers who want to reuse large
 parts of their existing code frameworks while gaining access to state of the art
@@ -262,7 +262,7 @@ be broken down into a couple different objectives.
         serial CPU implementations to learn the most effective mechanisms for
         parallel speedup.
     \item Our second major objective will be to use what we have learned about
-        massively parallel code to speed up Intrepid's tensor contraction
+        massively parallel code to speed up Intrepid's tensor manipulation
         kernel.
     \item The third and final objective of this project is to speed up another
         kernel from Intrepid.  This kernel will be focused on one of the
@@ -299,12 +299,11 @@ Bridge's traditional 8-Core hardware.
 
 After this, we will try to familiarize ourselves with massively multithreaded
 programming by working through a series of example problems in a variety of
-environments. So far, we have identified the following problems as likely
+environments. We have identified the following problems as likely
 candidates.
 \begin{itemize}
 	\item scalar integration
 	\item histogram calculations
-	\item calculating polynomials for a long list of x values and coefficients.
 	\item naive matrix multiplication
 	\item smart matrix multiplication
 	\item scalar product of two second order tensors 
@@ -313,15 +312,17 @@ candidates.
 The last of these problems should prepare us to work with the Intrepid library, since these
 two problems are indicative of the types of kernels we will be working with.
 
-For all of these problems, we intend on creating the following solutions
+For all of these problems, we intend to create the following solutions
 \begin{itemize}
 	\item fast serial
 	\item implementation using Intel's Threaded Building Blocks
 	\item implementation using OpenMP
 	\item implementation using Cuda
 	\item implementation using Kokkos
-\end{itemize} After familiarizing ourselves with TBB, CUDA and OpenMP, we will
-have a background to understand the ideal way to write code using Kokkos. At
+\end{itemize} 
+
+After familiarizing ourselves with TBB, CUDA and OpenMP, we will
+have enough background to understand the ideal way to write code using Kokkos. At
 this point, we will begin to write solutions to our practice problems using
 Kokkos.  We can then compare the speedup gains on Kokkos compared to the other
 libraries, and also the ease of writing thread scalable code using Kokkos
@@ -329,24 +330,21 @@ compared to the other libraries. This will be good practice for applying the
 same process to Intrepid kernels, to thoroughly evaluate performance improvement
 and ease of coding.
 
-At this point, we will shift our focus to our first kernel.  After we implement
+We will then shift our focus to our first kernel and begin parallelizing the tensor 
+manipulation library using Kokkos.  After we implement
 the practice problems mentioned above we should have a good idea of where to go
 with the tensor contraction implementation. Tensor contraction is very similar
 to smart matrix multiplication in particular.  We will need to explore the main
 algorithms used for tensor contraction and determine if there are existing
 procedures for parallelizing the process. The original Kokkos source code, along
-with online materials should help us with this.
+with online materials should help us with this. If time permits, during our onsite visit
+we will give a presentation on our experience with Intrepid and Kokkos to developers
+at Sandia National Laboratories.
 
-Once we are familiar with Kokkos, and we feel we have enough of a background
-with the technologies, we will begin working on improving the tensor contraction
-library. At this point in the project it is difficult to create an accurate
-timeline for this process, but we hope that we will be able to present our
-progress at the end of semester site visit at Sandia.
-
-After the tensor contraction library we will continue work on one of the
+After the tensor manipulation library we will continue work on one of the
 Intrepid kernels previously mentioned. We hope that we will be able to
 accomplish significant speedup in this secondary library after we finish work on
-tensor contraction.
+tensor manipulation.
 %%% Appendices.
 
 %%% For your Statement of Work, you probably won't have any
